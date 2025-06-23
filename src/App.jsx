@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Spotify from './components/Spotify';
 import Callback from './components/Callback';
 import { reducerCases } from './utils/Constants';
+import { useStateProvider } from './utils/StateProvider';
 
 export default function App() {
   const [accessToken, setAccessToken] = useState(null);
