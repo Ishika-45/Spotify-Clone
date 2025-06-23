@@ -7,6 +7,7 @@ import Callback from "./components/Callback";
 export default function App() {
   useEffect(() => {
     const hash = window.location.hash;
+    console.log(hash);
     if(hash) {
       const token = hash.substring(1).split("&")[0].split('');
       console.log(token);
