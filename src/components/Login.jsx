@@ -127,6 +127,7 @@ const Container = styled.div`
 
   img {
     height: 20vh;
+    width:auto;
   }
 
   button {
