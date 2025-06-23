@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react'
-import Login from './components/Login'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import Callback from "./components/Callback";
+
 
 export default function App() {
   useEffect(() => {
@@ -11,7 +14,11 @@ export default function App() {
   },[]);
 
   return (
-
-      <Login />
+ <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/callback" element={<Callback />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
