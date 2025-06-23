@@ -15,7 +15,7 @@ export default function Callback() {
     const getAccessToken = async () => {
       const codeVerifier = localStorage.getItem("code_verifier");
       const clientId = "f4a151fe857e45a9b788201b0f9cb173";
-      const redirectUri = "https://spotify-clone-murex-eight-39.vercel.app/callback";
+      const redirectUri = "https://spotify-clone-murex-eight-39.vercel.app/";
 
       const body = new URLSearchParams({
         grant_type: "authorization_code",
@@ -49,3 +49,4 @@ export default function Callback() {
 
   return <div>Logging in with Spotify...</div>;
 }
+

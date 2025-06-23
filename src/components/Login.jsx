@@ -81,7 +81,7 @@ async function generateCodeChallenge(codeVerifier) {
 export default function Login() {
   const handleClick = async () => {
     const clientId = "f4a151fe857e45a9b788201b0f9cb173";
-    const redirectUri = "https://spotify-clone-murex-eight-39.vercel.app/callback"; // ⬅️ Page to handle access token
+    const redirectUri = "https://spotify-clone-murex-eight-39.vercel.app/"; // ⬅️ Page to handle access token
     const scope = [
       "user-read-email",
       "user-read-private",
