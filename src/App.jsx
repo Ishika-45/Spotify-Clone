@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './components/Login';
 import Spotify from './components/Spotify';
-import Callback from './components/Callback';
+// import Callback from './components/Callback';
 import { reducerCases } from './utils/Constants';
 import { useStateProvider } from './utils/StateProvider';
 
@@ -26,12 +26,7 @@ export default function App() {
 
   return (
     <>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/callback" element={<Callback />} />
-      </Routes>
-    </BrowserRouter>
+    
     <div>
       {storedToken ? <Spotify /> : <Login /> }
     </div>
