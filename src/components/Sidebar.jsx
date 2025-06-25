@@ -33,7 +33,7 @@ export default function Sidebar() {
       </div>
       <Playlists /> 
     </Container>
-  )
+  );
 }
 
 
@@ -68,10 +68,8 @@ cursor: pointer;
 transition: 0.3s ease-in-out;
 &:hover {
 color: white;
-
 }
 }
 }
 }
-
 `;
