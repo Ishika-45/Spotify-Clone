@@ -9,7 +9,7 @@ export default function Playlists() {
   useEffect(() => {
     const getPlaylistData = async () => {
       const response = await axios.get(
-        "https://api.spotify.com/v1/me",
+        "https://api.spotify.com/v1/me/playlists",
         {
           headers: {
             Authorization: `Bearer ${token}`,
