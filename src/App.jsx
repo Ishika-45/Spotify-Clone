@@ -35,11 +35,68 @@
 //   return <div>{token ? <Spotify /> : <Login />}</div>;
 // }
 // src/App.jsx
+// import React, { useEffect } from "react";
+// import Login from "./components/Login";
+// import Spotify from "./components/Spotify";
+// import { useStateProvider } from "./utils/StateProvider";
+// import { reducerCases } from "./utils/Constants";
+
+// export default function App() {
+//   const [{ token }, dispatch] = useStateProvider();
+
+//   useEffect(() => {
+//     const getAccessToken = async (code) => {
+//       const client_id = "f4a151fe857e45a9b788201b0f9cb173";
+//       const redirect_uri = "https://spotify-clone-murex-eight-39.vercel.app/";
+//       const code_verifier = localStorage.getItem("code_verifier");
+
+//       const body = new URLSearchParams({
+//         client_id,
+//         grant_type: "authorization_code",
+//         code,
+//         redirect_uri,
+//         code_verifier,
+//       });
+
+//       const response = await fetch("https://accounts.spotify.com/api/token", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/x-www-form-urlencoded",
+//         },
+//         body,
+//       });
+
+//       const data = await response.json();
+//       if (data.access_token) {
+//         localStorage.setItem("access_token", data.access_token);
+//         dispatch({ type: reducerCases.SET_TOKEN, token: data.access_token });
+//         window.history.replaceState({}, document.title, "/"); // clean URL
+//       } else {
+//         console.error("Failed to fetch access token", data);
+//       }
+//     };
+
+//     const urlParams = new URLSearchParams(window.location.search);
+//     const code = urlParams.get("code");
+//     const localToken = localStorage.getItem("access_token");
+
+//     if (code && !token) {
+//       getAccessToken(code);
+//     } else if (localToken && !token) {
+//       dispatch({ type: reducerCases.SET_TOKEN, token: localToken });
+//     }
+//   }, [dispatch, token]);
+
+//   return <div>{token ? <Spotify /> : <Login />}</div>;
+// }
+// src/App.jsx
 import React, { useEffect } from "react";
 import Login from "./components/Login";
 import Spotify from "./components/Spotify";
 import { useStateProvider } from "./utils/StateProvider";
 import { reducerCases } from "./utils/Constants";
+
+const TOKEN_EXPIRY_TIME = 3600 * 1000; // 1 hour in milliseconds
 
 export default function App() {
   const [{ token }, dispatch] = useStateProvider();
@@ -68,9 +125,12 @@ export default function App() {
 
       const data = await response.json();
       if (data.access_token) {
+        const timestamp = Date.now();
         localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("token_timestamp", timestamp.toString());
+
         dispatch({ type: reducerCases.SET_TOKEN, token: data.access_token });
-        window.history.replaceState({}, document.title, "/"); // clean URL
+        window.history.replaceState({}, document.title, "/");
       } else {
         console.error("Failed to fetch access token", data);
       }
@@ -78,12 +138,22 @@ export default function App() {
 
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
-    const localToken = localStorage.getItem("access_token");
+    const storedToken = localStorage.getItem("access_token");
+    const storedTimestamp = localStorage.getItem("token_timestamp");
 
     if (code && !token) {
       getAccessToken(code);
-    } else if (localToken && !token) {
-      dispatch({ type: reducerCases.SET_TOKEN, token: localToken });
+    } else if (storedToken && storedTimestamp) {
+      const tokenAge = Date.now() - parseInt(storedTimestamp, 10);
+      if (tokenAge < TOKEN_EXPIRY_TIME) {
+        dispatch({ type: reducerCases.SET_TOKEN, token: storedToken });
+      } else {
+        // Token expired – clear and reload
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("token_timestamp");
+        localStorage.removeItem("code_verifier");
+        window.location.href = "/"; // force re-login
+      }
     }
   }, [dispatch, token]);
 
