@@ -81,6 +81,7 @@ export default function App() {
         dispatch({ type: reducerCases.SET_TOKEN, token });
       }
     }
+    console.log(token);
     document.title = "Spotify";
   }, [dispatch, token]);
 
