@@ -74,14 +74,27 @@ export default function App() {
   const [{ token }, dispatch] = useStateProvider();
 
   useEffect(() => {
+    let accessToken = null;
+
+    // 1️⃣ Extract token from URL hash (after login)
     const hash = window.location.hash;
     if (hash) {
-      const token = hash.substring(1).split("&")[0].split("=")[1];
-      if (token) {
-        dispatch({ type: reducerCases.SET_TOKEN, token });
+      const params = new URLSearchParams(hash.substring(1));
+      accessToken = params.get("access_token");
+
+      if (accessToken) {
+        dispatch({ type: reducerCases.SET_TOKEN, token: accessToken });
+        localStorage.setItem("access_token", accessToken);
+        window.location.hash = ""; // cleanup
       }
     }
-    console.log(token);
+
+    // 2️⃣ If page reloads, get token from localStorage
+    const localToken = localStorage.getItem("access_token");
+    if (localToken && !token) {
+      dispatch({ type: reducerCases.SET_TOKEN, token: localToken });
+    }
+
     document.title = "Spotify";
   }, [dispatch, token]);
 
