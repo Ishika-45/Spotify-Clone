@@ -82,7 +82,7 @@ export default function App() {
       }
     }
     document.title = "Spotify";
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   return <div>{token ? <Spotify /> : <Login />}</div>;
 }
