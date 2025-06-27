@@ -113,8 +113,8 @@ export default function Playlists() {
   const changeCurrentPlaylist = async (selectedPlaylistId) => {
     dispatch({ type: reducerCases.SET_PLAYLIST_ID, selectedPlaylistId });
     if (selectedPlaylistId) {
-      console.log("playlistid:",selectedPlaylistId);
       try {
+        console.log("playlistid:",selectedPlaylistId);
         const response = await axios.get(
           `https://api.spotify.com/v1/playlists/${selectedPlaylistId}`,
           {
