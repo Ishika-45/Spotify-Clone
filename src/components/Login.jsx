@@ -82,18 +82,20 @@ export default function Login() {
   const handleClick = async () => {
     const client_id = "f4a151fe857e45a9b788201b0f9cb173";
     const redirect_uri = "https://spotify-clone-murex-eight-39.vercel.app/";
-    const scope = [
-      "user-read-private",
-      "user-read-email",
-      "playlist-read-collaborative",
-      "playlist-read-private",
-       "playlist-modify-public",
-      "playlist-modify-private",
-      "user-modify-playback-state",
-      "user-read-playback-state",
-      "user-read-currently-playing",
-      "user-read-recently-played",
-      "user-top-read",
+     const scopes = [
+      "user-read-private",           // Required for /me endpoint
+      "user-read-email",             // Required for user info
+      "playlist-read-private",       // Read private playlists
+      "playlist-read-collaborative", // Read collaborative playlists
+      "playlist-modify-public",      // Modify public playlists
+      "playlist-modify-private",     // Modify private playlists
+      "user-library-read",           // Read user's library
+      "user-library-modify",         // Modify user's library
+      "user-top-read",               // Read top tracks/artists
+      "user-read-recently-played",   // Read recent tracks
+      "user-read-playback-state",    // Read current playback
+      "user-modify-playback-state",  // Control playback
+      "streaming"                    // Play music in the app
     ].join(" ");
 
     const codeVerifier = generateCodeVerifier();

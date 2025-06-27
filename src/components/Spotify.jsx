@@ -22,7 +22,11 @@ export default function Spotify() {
 
   useEffect(() => {
     const getUserInfo = async () => {
+      if(!token){
+        console.log("No token");
+      }
       try {
+        console.log("tpken:",token);
         const { data } = await axios.get("https://api.spotify.com/v1/me", {
           headers: {
             Authorization: `Bearer ${token}`,
