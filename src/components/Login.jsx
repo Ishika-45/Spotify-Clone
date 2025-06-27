@@ -82,7 +82,6 @@ export default function Login() {
   const handleClick = async () => {
     const client_id = "f4a151fe857e45a9b788201b0f9cb173";
     const redirect_uri = "https://spotify-clone-murex-eight-39.vercel.app/";
-    const code_challenge = await generateCodeChallenge(codeVerifier);
     const scope = [
       "user-read-private",
       "user-read-email",
@@ -99,7 +98,7 @@ export default function Login() {
     localStorage.setItem("code_verifier", codeVerifier);
 
     const codeChallenge = await generateCodeChallenge(codeVerifier);
-const authUrl = `https://accounts.spotify.com/authorize?response_type=code&client_id=${client_id}&scope=${encodeURIComponent(scope)}&redirect_uri=${encodeURIComponent(redirect_uri)}&code_challenge_method=S256&code_challenge=${code_challenge}`;
+const authUrl = `https://accounts.spotify.com/authorize?response_type=code&client_id=${client_id}&scope=${encodeURIComponent(scope)}&redirect_uri=${encodeURIComponent(redirect_uri)}&code_challenge_method=S256&code_challenge=${codeChallenge}`;
 
 
     window.location.href = authUrl;
