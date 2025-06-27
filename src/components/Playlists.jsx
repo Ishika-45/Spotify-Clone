@@ -88,8 +88,12 @@ export default function Playlists() {
 
   useEffect(() => {
     const getPlaylistData = async () => {
-      console.log("Token used:",token);
+       if(!token){
+    console.log("No token available");
+  }
+      
       try {
+        console.log("Token used:",token);
         const response = await axios.get(
           "https://api.spotify.com/v1/me/playlists",
           {
