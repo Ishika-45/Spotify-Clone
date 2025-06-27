@@ -85,13 +85,13 @@ export default function Login() {
     const scope = [
       "user-read-private",
       "user-read-email",
+      "playlist-read-collaborative",
+      "playlist-read-private",
       "user-modify-playback-state",
       "user-read-playback-state",
       "user-read-currently-playing",
       "user-read-recently-played",
       "user-top-read",
-      "playlist-read-collaborative",
-      "playlist-read-private",
     ].join(" ");
 
     const codeVerifier = generateCodeVerifier();
