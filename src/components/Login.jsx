@@ -87,6 +87,8 @@ export default function Login() {
       "user-read-email",
       "playlist-read-collaborative",
       "playlist-read-private",
+       "playlist-modify-public",
+      "playlist-modify-private",
       "user-modify-playback-state",
       "user-read-playback-state",
       "user-read-currently-playing",

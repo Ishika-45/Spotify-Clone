@@ -82,9 +82,13 @@ import { useStateProvider } from "../utils/StateProvider";
 
 export default function Playlists() {
   const [{ token, playlists }, dispatch] = useStateProvider();
+  if(!token){
+    console.log("No token available");
+  }
 
   useEffect(() => {
     const getPlaylistData = async () => {
+      console.log("Token used:",token);
       try {
         const response = await axios.get(
           "https://api.spotify.com/v1/me/playlists",
