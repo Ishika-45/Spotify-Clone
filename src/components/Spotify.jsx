@@ -33,6 +33,10 @@ export default function Spotify() {
             "Content-Type": "application/json",
           },
         });
+        console.log("User info received:", data);
+        if(!data){
+          console.log("No user info");
+        }
         const userInfo = {
           userId: data.id,
           userUrl: data.external_urls.spotify,
