@@ -166,6 +166,7 @@ import Login from "./components/Login";
 import Spotify from "./components/Spotify";
 import { useStateProvider } from "./utils/StateProvider";
 import { reducerCases } from "./utils/Constants";
+import GlobalStyle from "./components/GlobalStyle";
 
 const TOKEN_EXPIRY_TIME = 3600 * 1000; // 1 hour
 
@@ -225,9 +226,12 @@ export default function App() {
   }, [dispatch, token, navigate]);
 
   return (
+    <>
+    <GlobalStyle/>
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/home" element={token ? <Spotify /> : <Login />} />
     </Routes>
+    </>
   );
 }
