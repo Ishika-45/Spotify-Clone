@@ -136,7 +136,7 @@ export default function Playlists() {
   return (
     <Container>
       <ul>
-        {playlists?.map(({ name, id }) => (
+        {playlists?.map(({ name, id,image }) => (
           <li key={id} onClick={() => changeCurrentPlaylist(id)}>
              <div className="playlist-item">
         {image && <img src={image} alt={name} />}
