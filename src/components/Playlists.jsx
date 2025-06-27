@@ -171,23 +171,26 @@ const Container = styled.div`
     li {
       transition: 0.3s ease-in-out;
       cursor: pointer;
-      .playlist-item {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
 
-    img {
-      width: 40px;
-      height: 40px;
-      object-fit: cover;
-      border-radius: 4px;
-    }
-
-    span {
-      font-size: 1rem;
-    }
       &:hover {
         color: white;
+      }
+
+      .playlist-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        img {
+          width: 40px;
+          height: 40px;
+          object-fit: cover;
+          border-radius: 4px;
+        }
+
+        span {
+          font-size: 1rem;
+        }
       }
     }
   }
