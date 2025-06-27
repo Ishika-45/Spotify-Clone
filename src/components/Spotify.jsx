@@ -145,7 +145,7 @@ export default function Spotify() {
   // ✅ Helper function to handle token expiration
   const handleTokenError = (error) => {
     console.error("Token error:", error.response?.data || error.message);
-    if (!storedToken || !isTokenValid()) {
+    if (!storedToken ) {
   console.log("Invalid or missing token, redirecting to login");
   window.location.href = '/login';
   return;
