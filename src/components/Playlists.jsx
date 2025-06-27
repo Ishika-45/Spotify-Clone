@@ -96,8 +96,8 @@ export default function Playlists() {
           }
         );
         const { items } = response.data;
-        const playlists = items.map(({ name, id }) => {
-          return { name, id };
+        const playlists = items.map(({ name, id,image }) => {
+          return { name, id, image: images?.[0]?.url || "", };
         });
         dispatch({ type: reducerCases.SET_PLAYLISTS, playlists });
       } catch (error) {
@@ -138,7 +138,10 @@ export default function Playlists() {
       <ul>
         {playlists?.map(({ name, id }) => (
           <li key={id} onClick={() => changeCurrentPlaylist(id)}>
-            {name}
+             <div className="playlist-item">
+        {image && <img src={image} alt={name} />}
+        <span>{name}</span>
+      </div>
           </li>
         ))}
       </ul>
@@ -168,6 +171,21 @@ const Container = styled.div`
     li {
       transition: 0.3s ease-in-out;
       cursor: pointer;
+      .playlist-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    span {
+      font-size: 1rem;
+    }
       &:hover {
         color: white;
       }
