@@ -97,7 +97,7 @@ export default function Playlists() {
         );
         const { items } = response.data;
         const playlists = items.map(({ name, id,image }) => {
-          return { name, id, image: images?.[0]?.url || "", };
+          return { name, id, image: image?.[0]?.url || "", };
         });
         dispatch({ type: reducerCases.SET_PLAYLISTS, playlists });
       } catch (error) {
