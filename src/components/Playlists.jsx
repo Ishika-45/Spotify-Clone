@@ -17,6 +17,7 @@ export default function Playlists() {
           },
         }
       );
+      console.log(token);
       const { items } = response.data;
       const playlists = items.map(({ name, id }) => {
         return { name, id };

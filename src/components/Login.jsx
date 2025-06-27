@@ -90,18 +90,16 @@ export default function Login() {
       "user-read-currently-playing",
       "user-read-recently-played",
       "user-top-read",
-    ];
+      "playlist-read-collaborative",
+      "playlist-read-private",
+    ].join(" ");
 
     const codeVerifier = generateCodeVerifier();
     localStorage.setItem("code_verifier", codeVerifier);
 
     const codeChallenge = await generateCodeChallenge(codeVerifier);
+const authUrl = `https://accounts.spotify.com/authorize?response_type=code&client_id=${client_id}&scope=${encodeURIComponent(scope)}&redirect_uri=${encodeURIComponent(redirect_uri)}&code_challenge_method=S256&code_challenge=${code_challenge}`;
 
-    const authUrl = `https://accounts.spotify.com/authorize?response_type=code&client_id=${client_id}&scope=${encodeURIComponent(
-      scope.join(" ")
-    )}&redirect_uri=${encodeURIComponent(
-      redirect_uri
-    )}&code_challenge_method=S256&code_challenge=${codeChallenge}`;
 
     window.location.href = authUrl;
   };
