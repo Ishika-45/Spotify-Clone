@@ -90,16 +90,88 @@
 //   return <div>{token ? <Spotify /> : <Login />}</div>;
 // }
 // src/App.jsx
+// import React, { useEffect } from "react";
+// import Login from "./components/Login";
+// import Spotify from "./components/Spotify";
+// import { useStateProvider } from "./utils/StateProvider";
+// import { reducerCases } from "./utils/Constants";
+
+// const TOKEN_EXPIRY_TIME = 3600 * 1000; // 1 hour in milliseconds
+
+// export default function App() {
+//   const [{ token }, dispatch] = useStateProvider();
+
+//   useEffect(() => {
+//     const getAccessToken = async (code) => {
+//       const client_id = "f4a151fe857e45a9b788201b0f9cb173";
+//       const redirect_uri = "https://spotify-clone-murex-eight-39.vercel.app/home";
+//       const code_verifier = localStorage.getItem("code_verifier");
+
+//       const body = new URLSearchParams({
+//         client_id,
+//         grant_type: "authorization_code",
+//         code,
+//         redirect_uri,
+//         code_verifier,
+//       });
+
+//       const response = await fetch("https://accounts.spotify.com/api/token", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/x-www-form-urlencoded",
+//         },
+//         body,
+//       });
+
+//       const data = await response.json();
+//       if (data.access_token) {
+//         const timestamp = Date.now();
+//         localStorage.setItem("access_token", data.access_token);
+//         localStorage.setItem("token_timestamp", timestamp.toString());
+
+//         dispatch({ type: reducerCases.SET_TOKEN, token: data.access_token });
+//         window.history.replaceState({}, document.title, "/");
+//       } else {
+//         console.error("Failed to fetch access token", data);
+//       }
+//     };
+
+//     const urlParams = new URLSearchParams(window.location.search);
+//     const code = urlParams.get("code");
+//     const storedToken = localStorage.getItem("access_token");
+//     const storedTimestamp = localStorage.getItem("token_timestamp");
+
+//     if (code && !token) {
+//       getAccessToken(code);
+//     } else if (storedToken && storedTimestamp) {
+//       const tokenAge = Date.now() - parseInt(storedTimestamp, 10);
+//       if (tokenAge < TOKEN_EXPIRY_TIME) {
+//         dispatch({ type: reducerCases.SET_TOKEN, token: storedToken });
+//       } else {
+//         // Token expired – clear and reload
+//         localStorage.removeItem("access_token");
+//         localStorage.removeItem("token_timestamp");
+//         localStorage.removeItem("code_verifier");
+//         window.location.href = "/"; 
+//       }
+//     }
+//   }, [dispatch, token]);
+
+//   return <div>{token ? <Spotify /> : <Login />}</div>;
+// }
+// src/App.jsx
 import React, { useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Login from "./components/Login";
 import Spotify from "./components/Spotify";
 import { useStateProvider } from "./utils/StateProvider";
 import { reducerCases } from "./utils/Constants";
 
-const TOKEN_EXPIRY_TIME = 3600 * 1000; // 1 hour in milliseconds
+const TOKEN_EXPIRY_TIME = 3600 * 1000; // 1 hour
 
 export default function App() {
   const [{ token }, dispatch] = useStateProvider();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getAccessToken = async (code) => {
@@ -117,9 +189,7 @@ export default function App() {
 
       const response = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body,
       });
 
@@ -128,9 +198,8 @@ export default function App() {
         const timestamp = Date.now();
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("token_timestamp", timestamp.toString());
-
         dispatch({ type: reducerCases.SET_TOKEN, token: data.access_token });
-        window.history.replaceState({}, document.title, "/");
+        navigate("/home");
       } else {
         console.error("Failed to fetch access token", data);
       }
@@ -147,15 +216,18 @@ export default function App() {
       const tokenAge = Date.now() - parseInt(storedTimestamp, 10);
       if (tokenAge < TOKEN_EXPIRY_TIME) {
         dispatch({ type: reducerCases.SET_TOKEN, token: storedToken });
+        navigate("/home");
       } else {
-        // Token expired – clear and reload
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("token_timestamp");
-        localStorage.removeItem("code_verifier");
-        window.location.href = "/"; 
+        localStorage.clear();
+        navigate("/");
       }
     }
-  }, [dispatch, token]);
+  }, [dispatch, token, navigate]);
 
-  return <div>{token ? <Spotify /> : <Login />}</div>;
+  return (
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/home" element={token ? <Spotify /> : <Login />} />
+    </Routes>
+  );
 }
