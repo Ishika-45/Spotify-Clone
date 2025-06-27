@@ -119,6 +119,7 @@ export default function Playlists() {
   dispatch({ type: reducerCases.SET_PLAYLIST_ID, selectedPlaylistId });
 
   try {
+    console.log(Hello,selectedPlaylistId);
     const response = await axios.get(
       `https://api.spotify.com/v1/playlists/${selectedPlaylistId}`,
       {
