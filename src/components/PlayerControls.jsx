@@ -56,7 +56,7 @@ export default function PlayerControls() {
         id: response1.data.item.id,
         name: response1.data.item.name,
         artists: response1.data.item.artists.map((artist) => artist.name),
-        image: response1.data.item.album.images[2].url,
+        image: item.album?.images?.[2]?.url || item.album?.images?.[0]?.url || "",
       };
       dispatch({ type: reducerCases.SET_PLAYING, currentPlaying });
     } else {
