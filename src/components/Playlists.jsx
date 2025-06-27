@@ -111,26 +111,28 @@ export default function Playlists() {
   }, [token, dispatch]);
 
   const changeCurrentPlaylist = async (selectedPlaylistId) => {
-    dispatch({ type: reducerCases.SET_PLAYLIST_ID, selectedPlaylistId });
-    if (selectedPlaylistId) {
-      try {
-        console.log("playlistid:",selectedPlaylistId);
-        const response = await axios.get(
-          `https://api.spotify.com/v1/playlists/${selectedPlaylistId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log("Selected playlist details:", response.data);
-        // Optional: You can dispatch additional data here
-      } catch (error) {
-        console.error("Failed to fetch playlist details:", error);
+  if (!selectedPlaylistId || typeof selectedPlaylistId !== "string") {
+    console.warn("Invalid playlist ID:", selectedPlaylistId);
+    return;
+  }
+
+  dispatch({ type: reducerCases.SET_PLAYLIST_ID, selectedPlaylistId });
+
+  try {
+    const response = await axios.get(
+      `https://api.spotify.com/v1/playlists/${selectedPlaylistId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       }
-    }
-  };
+    );
+    console.log("Selected playlist details:", response.data);
+  } catch (error) {
+    console.error("Failed to fetch playlist details:", error);
+  }
+};
 
   return (
     <Container>
