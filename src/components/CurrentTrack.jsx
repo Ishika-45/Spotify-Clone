@@ -21,7 +21,7 @@ export default function CurrentTrack() {
           id: response.data.item.id,
           name: response.data.item.name,
           artists: response.data.item.artists.map((artist) => artist.name),
-          image: response.data.item.album.images[2].url,
+          image:item.album?.images?.[2]?.url || item.album?.images?.[0]?.url || "",
         };
         dispatch({ type: reducerCases.SET_PLAYING, currentPlaying });
       } else {
