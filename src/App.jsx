@@ -104,7 +104,7 @@ export default function App() {
   useEffect(() => {
     const getAccessToken = async (code) => {
       const client_id = "f4a151fe857e45a9b788201b0f9cb173";
-      const redirect_uri = "https://spotify-clone-murex-eight-39.vercel.app/";
+      const redirect_uri = "https://spotify-clone-murex-eight-39.vercel.app/home";
       const code_verifier = localStorage.getItem("code_verifier");
 
       const body = new URLSearchParams({
@@ -152,7 +152,7 @@ export default function App() {
         localStorage.removeItem("access_token");
         localStorage.removeItem("token_timestamp");
         localStorage.removeItem("code_verifier");
-        window.location.href = "/"; // force re-login
+        window.location.href = "/"; 
       }
     }
   }, [dispatch, token]);
