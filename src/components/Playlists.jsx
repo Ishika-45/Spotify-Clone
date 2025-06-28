@@ -3,9 +3,11 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { reducerCases } from "../utils/Constants";
 import { useStateProvider } from "../utils/StateProvider";
+import { useNavigate } from "react-router-dom";
 
 export default function Playlists() {
   const [{ token, playlists }, dispatch] = useStateProvider();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getPlaylistData = async () => {
@@ -20,8 +22,8 @@ export default function Playlists() {
           }
         );
         const { items } = response.data;
-        const playlists = items.map(({ name, id,images }) => {
-          return { name, id, image: images?.[0]?.url || "", };
+        const playlists = items.map(({ name, id, images }) => {
+          return { name, id, image: images?.[0]?.url || "" };
         });
         dispatch({ type: reducerCases.SET_PLAYLISTS, playlists });
       } catch (error) {
@@ -34,40 +36,21 @@ export default function Playlists() {
     }
   }, [token, dispatch]);
 
-  const changeCurrentPlaylist = async (selectedPlaylistId) => {
-  if (!selectedPlaylistId || typeof selectedPlaylistId !== "string") {
-    console.warn("Invalid playlist ID:", selectedPlaylistId);
-    return;
-  }
-
-  dispatch({ type: reducerCases.SET_PLAYLIST_ID, selectedPlaylistId });
-
-  try {
-    console.log("Hello",selectedPlaylistId);
-    const response = await axios.get(
-      `https://api.spotify.com/v1/playlists/${selectedPlaylistId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    console.log("Selected playlist details:", response.data);
-  } catch (error) {
-    console.error("Failed to fetch playlist details:", error);
-  }
-};
+  const handlePlaylistClick = (playlistId) => {
+    if (!playlistId || typeof playlistId !== "string") return;
+    dispatch({ type: reducerCases.SET_PLAYLIST_ID, selectedPlaylistId: playlistId });
+    navigate(`/playlist?id=${playlistId}`);
+  };
 
   return (
     <Container>
       <ul>
-        {playlists?.map(({ name, id,image }) => (
-          <li key={id} onClick={() => changeCurrentPlaylist(id)}>
-             <div className="playlist-item">
-        {image && <img src={image} alt={name} />}
-        <span>{name}</span>
-      </div>
+        {playlists?.map(({ name, id, image }) => (
+          <li key={id} onClick={() => handlePlaylistClick(id)}>
+            <div className="playlist-item">
+              {image && <img src={image} alt={name} />}
+              <span>{name}</span>
+            </div>
           </li>
         ))}
       </ul>

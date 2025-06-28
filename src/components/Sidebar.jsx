@@ -3,8 +3,10 @@ import { IoLibrary } from 'react-icons/io5';
 import { MdHomeFilled, MdSearch } from 'react-icons/md';
 import styled from 'styled-components'
 import Playlists from './Playlists';
+import { useNavigate } from 'react-router-dom';
 
 export default function Sidebar() {
+  const navigate=useNavigate();
   return (
     <Container>
       <div className="top_links">
@@ -15,7 +17,7 @@ export default function Sidebar() {
       />
         </div>
         <ul>
-            <li>
+            <li onClick={() => navigate('/home')}>
                 <MdHomeFilled/>
                 <span>Home</span>
             </li>

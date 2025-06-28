@@ -1,161 +1,114 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
-import Sidebar from './Sidebar';
-import Navbar from './Navbar';
-import Body from './Body';
-import Footer from './Footer';
-import { useStateProvider } from '../utils/StateProvider';
-import axios from 'axios';
-import { reducerCases } from '../utils/Constants';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { useStateProvider } from "../utils/StateProvider";
+import { Link } from "react-router-dom";
 
 export default function Spotify() {
-  const [{ token }, dispatch] = useStateProvider();
-  const [navBackground, setNavBackground] = useState(false);
-  const [headerBackground, setHeaderBackground] = useState(false);
-  const bodyRef = useRef();
-  const storedToken=token || localStorage.getItem("access_token");
-
-  const bodyScrolled = () => {
-    const scrollTop = bodyRef.current.scrollTop;
-    setNavBackground(scrollTop >= 30);
-    setHeaderBackground(scrollTop >= 268);
-  };
-
-  const handleTokenError = (error) => {
-    console.error("Token error:", error.response?.data || error.message);
-    if (!storedToken ) {
-  window.location.href = '/login';
-  return;
-}
-  };
+  const [{ token },dispatch] = useStateProvider();
+  const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
-    const getUserInfo = async () => {
-      if (!token) {
-        console.log("No token available for user info request");
-        return;
-      }
-
-      try {
-        console.log("Fetching user info with token:", token.substring(0, 20) + "..."); 
-        
-        const { data } = await axios.get("https://api.spotify.com/v1/me", {
+    if(token){
+      axios
+        .get("https://api.spotify.com/v1/browse/new-releases?limit=20", {
           headers: {
-            Authorization: `Bearer ${storedToken}`,
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
+        })
+        .then((response) => {
+          setAlbums(response.data.albums.items);
+        })
+        .catch((err) => {
+          console.error("Failed to fetch new releases:", err.response?.data || err.message);
         });
-        
-        const userInfo = {
-          userId: data.id,
-          userUrl: data.external_urls.spotify,
-          userName: data.display_name,
-        };
-        dispatch({ type: reducerCases.SET_USER, userInfo });
-      } catch (err) {
-        console.error("Failed to fetch user info", err.response?.data || err.message);
-        handleTokenError(err);
-      }
-    };
-
-    const getPlaybackState = async () => {
-
-      try {
-        
-        const { data } = await axios.get("https://api.spotify.com/v1/me/player", {
-          headers: {
-            Authorization: `Bearer ${storedToken}`,
-            "Content-Type": "application/json",
-          },
-        });
-        
-        
-        dispatch({
-          type: reducerCases.SET_PLAYER_STATE,
-          playerState: data?.is_playing ?? false,
-        });
-      } catch (err) {
-        if (err.response?.status === 404) {
-          dispatch({
-            type: reducerCases.SET_PLAYER_STATE,
-            playerState: false,
-          });
-        } else {
-          console.error("Failed to fetch playback state", err.response?.data || err.message);
-          handleTokenError(err);
-        }
-      }
-    };
-
-    if (token) {
-      getUserInfo();
-      getPlaybackState();
-    } else {
-      console.log("No token available, skipping API calls");
     }
-  }, [dispatch, token]);
+    
+  }, [ token]);
 
-  if (!token) {
-    return (
-      <Container>
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          height: '100vh',
-          color: 'white',
-          fontSize: '1.2rem'
-        }}>
-          Loading...
-        </div>
-      </Container>
-    );
-  }
+  
 
   return (
     <Container>
-      <div className="spotify_body">
-        <Sidebar />
-        <div className="body" ref={bodyRef} onScroll={bodyScrolled}>
-          <div className="body_contents">
-            <Body headerBackground={headerBackground} />
-          </div>
-        </div>
-      </div>
-      <div className="spotify_footer">
-        <Footer />
-      </div>
+      <h2>New Releases Albums</h2>
+      <Grid>
+        {albums.map((album) => (
+          <StyledLink to={`/album/${album.id}`} key={album.id}>
+            <Card>
+              {album.images?.[0]?.url ? (
+                <img src={album.images[0].url} alt={album.name} />
+              ) : (
+                <Placeholder>{album.name[0]}</Placeholder>
+              )}
+              <p>{album.name}</p>
+              <span>{album.artists.map((a) => a.name).join(", ")}</span>
+            </Card>
+          </StyledLink>
+        ))}
+      </Grid>
     </Container>
   );
 }
 
 const Container = styled.div`
-  max-width: 100vw;
-  max-height: 100vh;
-  overflow: hidden;
-  display: grid;
-  grid-template-rows: 85vh 15vh;
+  height: calc(100vh - 200px);
+  padding: 2rem;
+  color: white;
 
-  .spotify_body {
-    display: grid;
-    grid-template-columns: 15vw 85vw;
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 1));
-    background-color: rgb(32, 87, 100);
-
-    .body {
-      height: 100%;
-      width: 100%;
-      overflow: auto;
-
-      &::-webkit-scrollbar {
-        width: 0.7rem;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: rgba(255, 255, 255, 0.6);
-      }
-    }
+  h2 {
+    margin-bottom: 1.5rem;
   }
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+`;
+
+const Card = styled.div`
+  background-color: #181818;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+
+  img {
+    width: 100%;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+
+  p {
+    margin: 0.5rem 0 0.2rem;
+    font-weight: bold;
+    color: white;
+  }
+
+  span {
+    font-size: 0.9rem;
+    color: #aaa;
+  }
+     &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    background-color:rgb(10, 69, 30);
+  }
+`;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
+
+
+const Placeholder = styled.div`
+  background-color: #333;
+  color: #fff;
+  width: 100%;
+  height: 150px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
 `;

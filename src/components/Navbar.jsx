@@ -1,108 +1,39 @@
-// import React,{useState} from 'react'
-// import { CgProfile } from 'react-icons/cg'
-// import { FaSearch } from 'react-icons/fa'
-// import styled from 'styled-components'
-// import { useNavigate } from "react-router-dom";
-// import { useStateProvider } from '../utils/StateProvider'
-
-// export default function Navbar({ navBackground }) {
-//   const [{ userInfo }] = useStateProvider();
-//   const navigate = useNavigate();
-//   const [query, setQuery] = useState("");
-
-//   const handleSearch = (e) => {
-//   if (e.key === "Enter" && query.trim()) {
-//     navigate(`/search?q=${encodeURIComponent(query.trim())}`);
-//   }
-// };
-//   return (
-//     <Container navBackground={navBackground}>
-//       <div className="search_bar">
-//         <FaSearch />
-//         <input
-//   type="text"
-//   placeholder="Artists, songs, or podcasts"
-//   value={query}
-//   onChange={(e) => setQuery(e.target.value)}
-//   onKeyDown={handleSearch}
-// />
-//       </div>
-//       <div className="avatar">
-//         <a href={userInfo?.userUrl}>
-//           <CgProfile />
-//           <span>{userInfo?.userName}</span>
-//         </a>
-//       </div>
-//     </Container>
-//   )
-// }
-
-// const Container = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   padding: 2rem;
-//   height: 15vh;
-//   position: sticky;
-//   top: 0;
-//   transition: 0.3s ease-in-out;
-//   background-color: ${({ navBackground }) =>
-//     navBackground ? "rgba(0,0,0,0.7)" : "none"};
-//   .search_bar{
-//     background-color: white;
-//     width: 30%;
-//     padding: 0.4rem 1rem;
-//     border-radius: 2rem;
-//     display: flex;
-//     align-items: center;
-//     gap: 0.5rem;
-//     input{
-//       border: none;
-//       height: 2rem;
-//       width: 100%;
-//       &:focus {
-//         outline: none; 
-//       }
-//     }
-//   }
-//   .avatar{
-//     background-color: black;
-//     padding: 0.3rem 0.4rem;
-//     padding-right: 1rem;
-//     border-radius: 2rem;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     a{
-//       display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     gap: 0.5rem;
-//     text-decoration: none;
-//     color: white;
-//     font-weight: bold;
-//     svg {
-//     font-size: 1.3rem;
-//     background-color: #282828;
-//     padding: 0.2rem;
-//     border-radius: 1rem;
-//     color: #c7c5c5;
-//     }
-//     }
-//   }
-// `
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { FaSearch, FaHome, FaBell, FaDownload, FaUsers } from 'react-icons/fa';
+import { FaSearch, FaHome, FaBell } from 'react-icons/fa';
 import { CgProfile } from 'react-icons/cg';
-import { useStateProvider } from '../utils/StateProvider';
+import { IoLogOut } from 'react-icons/io5';
+import axios from 'axios';
 
-export default function Navbar() {
-  const [{ userInfo }] = useStateProvider();
+export default function Navbar({ headerBackground }) {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
+  const [userInfo, setUserInfo] = useState(null);
+  const token = localStorage.getItem("access_token");
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const { data } = await axios.get("https://api.spotify.com/v1/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        setUserInfo({
+          userId: data.id,
+          userUrl: data.external_urls.spotify,
+          userName: data.display_name,
+        });
+      } catch (err) {
+        console.error("Failed to fetch user info", err.response?.data || err.message);
+      }
+    };
+
+    getUserInfo();
+  }, [token]);
 
   const handleSearch = (e) => {
     if (e.key === "Enter" && query.trim()) {
@@ -110,22 +41,20 @@ export default function Navbar() {
     }
   };
 
-  return (
-   <Container className='navbar' style={{ backgroundColor: 'rgba(0,0,0,0.8)' }}>
-      <div className="left">
-          <img
-        src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Full_Logo_RGB_White.png"
-        alt="spotify"
-      />
-      </div>
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/');
+  };
 
+  return (
+    <Container headerBackground={headerBackground}>
       <div className="center">
-        <FaHome className="icon" />
+        <FaHome className="icon" onClick={() => navigate('/home')} />
         <div className="search_bar">
           <FaSearch />
           <input
             type="text"
-            placeholder="What do you want to play?"
+            placeholder="Albums, Artists or Tracks"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleSearch}
@@ -135,13 +64,13 @@ export default function Navbar() {
 
       <div className="right">
         <FaBell className="icon" />
-        <FaUsers className="icon" />
         <div className="avatar">
-          <a href={userInfo?.userUrl}>
+          <a href={userInfo?.userUrl} target="_blank" rel="noreferrer">
             <CgProfile />
-            <span>{userInfo?.userName?.[0] || "U"}</span>
+            <span>{userInfo?.userName || "User"}</span>
           </a>
         </div>
+        <IoLogOut className="logout-icon" onClick={handleLogout} title="Logout" />
       </div>
     </Container>
   );
@@ -153,14 +82,9 @@ const Container = styled.div`
   align-items: center;
   padding: 1rem 2rem;
   height: 10vh;
-  position: sticky;
-  top: 0;
-  background-color: "rgba(0,0,0,0.8)";
-  z-index: 10;
-
-  .left img {
-    width: 40px;
-  }
+  transition: 0.3s ease-in-out;
+  background-color: ${({ headerBackground }) =>
+    headerBackground ? "rgba(0,0,0,0.8)" : "rgba(0,0,0,0.2)"};
 
   .center {
     display: flex;
@@ -168,13 +92,14 @@ const Container = styled.div`
     gap: 1rem;
 
     .icon {
-      width:24px;
-      heigth:24px;
-      border-radius:50%;
-      background
       color: white;
       font-size: 1.3rem;
       cursor: pointer;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #1db954;
+      }
     }
 
     .search_bar {
@@ -185,6 +110,7 @@ const Container = styled.div`
       gap: 0.5rem;
       padding: 0.5rem 1rem;
       border-radius: 999px;
+      
       input {
         background: transparent;
         border: none;
@@ -192,6 +118,9 @@ const Container = styled.div`
         width: 300px;
         &:focus {
           outline: none;
+        }
+        &::placeholder {
+          color: #aaa;
         }
       }
     }
@@ -202,20 +131,29 @@ const Container = styled.div`
     align-items: center;
     gap: 1rem;
 
-    .premium {
-      background: white;
-      color: black;
-      padding: 0.5rem 1rem;
-      border-radius: 999px;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-    }
-
     .icon {
       color: white;
       font-size: 1.2rem;
       cursor: pointer;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #1db954;
+      }
+    }
+
+    .logout-icon {
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0.3rem;
+      border-radius: 50%;
+
+      &:hover {
+        color: #ff6b6b;
+        background-color: rgba(255, 107, 107, 0.1);
+      }
     }
 
     .avatar {

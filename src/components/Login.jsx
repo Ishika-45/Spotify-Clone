@@ -24,7 +24,7 @@ export default function Login() {
 
   const handleClick = async () => {
     const client_id = "f4a151fe857e45a9b788201b0f9cb173";
-    const redirect_uri = "https://spotify-clone-murex-eight-39.vercel.app/home";
+    const redirect_uri = "http://127.0.0.1:5173/";
      const scope = [
       "user-read-private",           
       "user-read-email",             
