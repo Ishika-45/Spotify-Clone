@@ -2,16 +2,30 @@ import React from 'react'
 import { CgProfile } from 'react-icons/cg'
 import { FaSearch } from 'react-icons/fa'
 import styled from 'styled-components'
+import { useNavigate } from "react-router-dom";
 import { useStateProvider } from '../utils/StateProvider'
 
 export default function Navbar({ navBackground }) {
   const [{ userInfo }] = useStateProvider();
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
 
+  const handleSearch = (e) => {
+  if (e.key === "Enter" && query.trim()) {
+    navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+  }
+};
   return (
     <Container navBackground={navBackground}>
       <div className="search_bar">
         <FaSearch />
-        <input type='text' placeholder='Artists, songs, or podcasts ' />
+        <input
+  type="text"
+  placeholder="Artists, songs, or podcasts"
+  value={query}
+  onChange={(e) => setQuery(e.target.value)}
+  onKeyDown={handleSearch}
+/>
       </div>
       <div className="avatar">
         <a href={userInfo?.userUrl}>
