@@ -1,16 +1,3 @@
-// import React from "react";
-// import Navbar from "./Navbar";
-// import { Outlet } from "react-router-dom";
-
-// export default function MainLayout() {
-//   return (
-//     <>
-//       <Navbar />
-//       <Outlet />
-//     </>
-//   );
-// }
-// src/components/MainLayout.jsx
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';

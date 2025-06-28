@@ -1,4 +1,3 @@
-// src/components/Search.jsx
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
