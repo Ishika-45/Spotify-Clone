@@ -229,6 +229,7 @@ export default function App() {
   return (
     <>
     <GlobalStyle/>
+    {token && <Navbar navBackground={navBackground} />}
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/home" element={token ? <Spotify /> : <Login />} />
