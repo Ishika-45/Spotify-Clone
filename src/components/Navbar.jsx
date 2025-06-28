@@ -111,7 +111,7 @@ export default function Navbar({ navBackground }) {
   };
 
   return (
-    <Container navBackground={navBackground}>
+    <Container>
       <div className="left">
           <img
         src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Full_Logo_RGB_White.png"
@@ -157,8 +157,7 @@ const Container = styled.div`
   height: 10vh;
   position: sticky;
   top: 0;
-  background-color: ${({ navBackground }) =>
-    navBackground ? "rgba(0,0,0,0.8)" : "none"};
+  background-color: "rgba(0,0,0,0.8)";
   z-index: 10;
 
   .left img {
