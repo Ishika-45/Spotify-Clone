@@ -232,14 +232,14 @@ export default function App() {
     <>
     <GlobalStyle/>
     <Routes>
-      <Route path="/" element={<Login />} />
-      {token && (
-          <Route element={<MainLayout />}>
-            <Route path="/home" element={<Spotify />} />
-            <Route path="/search" element={<Search />} />
-          </Route>
-        )}
-    </Routes>
+  <Route path="/" element={<Login />} />
+  {token && (
+    <Route element={<MainLayout />}>
+      <Route path="/home" element={<Spotify />} />
+      <Route path="/search" element={<Search />} />
+    </Route>
+  )}
+</Routes>
     </>
   );
 }

@@ -10,7 +10,7 @@ import { reducerCases } from '../utils/Constants';
 
 export default function Spotify() {
   const [{ token }, dispatch] = useStateProvider();
-  
+  const [navBackground, setNavBackground] = useState(false);
   const [headerBackground, setHeaderBackground] = useState(false);
   const bodyRef = useRef();
   const storedToken=token || localStorage.getItem("access_token");
@@ -117,7 +117,6 @@ export default function Spotify() {
       <div className="spotify_body">
         <Sidebar />
         <div className="body" ref={bodyRef} onScroll={bodyScrolled}>
-          
           <div className="body_contents">
             <Body headerBackground={headerBackground} />
           </div>
