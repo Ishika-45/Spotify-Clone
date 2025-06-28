@@ -99,7 +99,7 @@ import { FaSearch, FaHome, FaBell, FaDownload, FaUsers } from 'react-icons/fa';
 import { CgProfile } from 'react-icons/cg';
 import { useStateProvider } from '../utils/StateProvider';
 
-export default function Navbar({ navBackground }) {
+export default function Navbar() {
   const [{ userInfo }] = useStateProvider();
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
