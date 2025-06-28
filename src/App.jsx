@@ -233,9 +233,12 @@ export default function App() {
     <GlobalStyle/>
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route element={<MainLayout/>}></Route>
-      <Route path="/home" element={token ? <Spotify /> : <Login />} />
-      <Route path="/search" element={<Search/>} />
+      {token && (
+          <Route element={<MainLayout />}>
+            <Route path="/home" element={<Spotify />} />
+            <Route path="/search" element={<Search />} />
+          </Route>
+        )}
     </Routes>
     </>
   );
