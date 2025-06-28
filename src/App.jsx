@@ -168,6 +168,7 @@ import { useStateProvider } from "./utils/StateProvider";
 import { reducerCases } from "./utils/Constants";
 import GlobalStyle from "./components/GlobalStyle";
 import Search from "./components/Search";
+import Navbar from "./components/Navbar";
 
 const TOKEN_EXPIRY_TIME = 3600 * 1000; // 1 hour
 
