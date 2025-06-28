@@ -160,7 +160,7 @@
 //   return <div>{token ? <Spotify /> : <Login />}</div>;
 // }
 // src/App.jsx
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Login from "./components/Login";
 import Spotify from "./components/Spotify";
