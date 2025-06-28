@@ -10,7 +10,7 @@ import { reducerCases } from '../utils/Constants';
 
 export default function Spotify() {
   const [{ token }, dispatch] = useStateProvider();
-  const [navBackground, setNavBackground] = useState(false);
+  
   const [headerBackground, setHeaderBackground] = useState(false);
   const bodyRef = useRef();
   const storedToken=token || localStorage.getItem("access_token");

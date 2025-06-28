@@ -175,7 +175,12 @@ const TOKEN_EXPIRY_TIME = 3600 * 1000; // 1 hour
 export default function App() {
   const [{ token }, dispatch] = useStateProvider();
   const navigate = useNavigate();
+  const [navBackground, setNavBackground] = useState(false);
 
+  const bodyScrolled = () => {
+    const scrollTop = bodyRef.current.scrollTop;
+    setNavBackground(scrollTop >= 30);
+  };
   useEffect(() => {
     const getAccessToken = async (code) => {
       const client_id = "f4a151fe857e45a9b788201b0f9cb173";
