@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { CgProfile } from 'react-icons/cg'
 import { FaSearch } from 'react-icons/fa'
 import styled from 'styled-components'
