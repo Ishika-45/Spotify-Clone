@@ -160,7 +160,7 @@
 //   return <div>{token ? <Spotify /> : <Login />}</div>;
 // }
 // src/App.jsx
-import React, { useEffect,useState } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Login from "./components/Login";
 import Spotify from "./components/Spotify";
@@ -168,19 +168,15 @@ import { useStateProvider } from "./utils/StateProvider";
 import { reducerCases } from "./utils/Constants";
 import GlobalStyle from "./components/GlobalStyle";
 import Search from "./components/Search";
-import Navbar from "./components/Navbar";
+import MainLayout from "./components/MainLayout";
+
 
 const TOKEN_EXPIRY_TIME = 3600 * 1000; // 1 hour
 
 export default function App() {
   const [{ token }, dispatch] = useStateProvider();
   const navigate = useNavigate();
-  const [navBackground, setNavBackground] = useState(false);
-
-  const bodyScrolled = () => {
-    const scrollTop = bodyRef.current.scrollTop;
-    setNavBackground(scrollTop >= 30);
-  };
+  
   useEffect(() => {
     const getAccessToken = async (code) => {
       const client_id = "f4a151fe857e45a9b788201b0f9cb173";
@@ -235,9 +231,9 @@ export default function App() {
   return (
     <>
     <GlobalStyle/>
-    {token && <Navbar navBackground={navBackground} />}
     <Routes>
       <Route path="/" element={<Login />} />
+      <Route element={<MainLayout/>}></Route>
       <Route path="/home" element={token ? <Spotify /> : <Login />} />
       <Route path="/search" element={<Search/>} />
     </Routes>
