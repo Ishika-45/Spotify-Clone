@@ -13,7 +13,7 @@ import Artist from "./components/Artist";
 import Playlist from "./components/Playlist";
 import Song from "./components/Song";
 
-const TOKEN_EXPIRY_TIME = 3600 * 1000; // 1 hour
+const TOKEN_EXPIRY_TIME = 3600 * 1000; 
 
 export default function App() {
   const [{ token }, dispatch] = useStateProvider();
