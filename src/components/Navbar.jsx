@@ -111,7 +111,7 @@ export default function Navbar() {
   };
 
   return (
-    <Container>
+    <Container className='navbar' style={"background-color:rgba(0,0,0,0.8)"}>
       <div className="left">
           <img
         src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Full_Logo_RGB_White.png"
@@ -134,8 +134,6 @@ export default function Navbar() {
       </div>
 
       <div className="right">
-        <button className="premium">Explore Premium</button>
-        <FaDownload className="icon" />
         <FaBell className="icon" />
         <FaUsers className="icon" />
         <div className="avatar">
@@ -170,6 +168,10 @@ const Container = styled.div`
     gap: 1rem;
 
     .icon {
+      width:24px;
+      heigth:24px;
+      border-radius:50%;
+      background
       color: white;
       font-size: 1.3rem;
       cursor: pointer;
