@@ -111,7 +111,7 @@ export default function Navbar() {
   };
 
   return (
-    <Container className='navbar' style={"background-color:rgba(0,0,0,0.8)"}>
+   <Container className='navbar' style={{ backgroundColor: 'rgba(0,0,0,0.8)' }}>
       <div className="left">
           <img
         src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Full_Logo_RGB_White.png"
