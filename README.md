@@ -36,28 +36,16 @@ A fully responsive Spotify web application clone built with **Vite**, **React**,
 
 ## 📦 Getting Started
 
-### 1. Clone the Repository
-
 ```bash
 git clone https://github.com/your-username/spotify-clone.git
 cd spotify-clone
 
----
-
-### 2. Install Dependencies
-
-```bash
 npm install
 
----
-
-### 3.Run the App Locally
-
-```bash
 npm run dev
 
 
 ---
-⚠️ Spotify API Login Limitation:
+## ⚠️ Spotify API Login Limitation:
 In development mode, only Spotify users explicitly registered as collaborators in your Spotify developer dashboard can authenticate and log in through this app.
 To allow broader access (e.g., for the public or demo users), you must request production access from Spotify for your application.
