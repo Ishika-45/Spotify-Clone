@@ -32,7 +32,7 @@ A fully responsive Spotify web application clone built with **Vite**, **React**,
 
 ## 📦 Getting Started
 
-git clone https://github.com/your-username/spotify-clone.git
+git clone https://github.com/Ishika-45/Spotify-Clone.git
 
 cd spotify-clone
 
