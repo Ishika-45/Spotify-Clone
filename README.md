@@ -42,10 +42,14 @@ A fully responsive Spotify web application clone built with **Vite**, **React**,
 git clone https://github.com/your-username/spotify-clone.git
 cd spotify-clone
 
+---
+
 ### 2. Install Dependencies
 
 ```bash
 npm install
+
+---
 
 ### 3.Run the App Locally
 
