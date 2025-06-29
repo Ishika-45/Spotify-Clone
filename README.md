@@ -16,7 +16,35 @@ A fully responsive Spotify web application clone built with **Vite**, **React**,
 - ⚛️ Global state management using **React Context API**
 - ⚡ Fast bundling and dev server with **Vite**
 
+---
+## 📸 ScreenShots
 
+### 1. Login Page
+![Screenshot 2025-06-29 223117](https://github.com/user-attachments/assets/1c4c5716-01ea-4fcc-97ba-d68f57bed696)
+
+### 2. Home Page
+![Screenshot 2025-06-29 223310](https://github.com/user-attachments/assets/1499a9d1-959b-487a-adc6-2fca693fe7fd)
+
+### 3. User's PlayList Details Page
+![Screenshot 2025-06-29 223405](https://github.com/user-attachments/assets/f02a18ff-dd33-4a81-9e3b-dca9ab39c316)
+
+### 4. Search Result Tracks
+![Screenshot 2025-06-29 223507](https://github.com/user-attachments/assets/8b1f744e-e4e1-4497-ac00-a3010a39f831)
+
+### 5. Search Result Playlists
+![Screenshot 2025-06-29 223530](https://github.com/user-attachments/assets/57d8ed25-f045-4ba8-9819-3e44c109cb23)
+
+### 6. Search Result Albums
+![Screenshot 2025-06-29 223556](https://github.com/user-attachments/assets/70ba33c3-6dc6-43d9-a17f-ca98c895fc5e)
+
+### 7. Search Result Artits
+![Screenshot 2025-06-29 223615](https://github.com/user-attachments/assets/1638e397-0ceb-4096-b95d-ffedb714347d)
+
+### 8. Artits' Details Page
+![Screenshot 2025-06-29 223719](https://github.com/user-attachments/assets/44ae4f18-7b90-415f-8a59-115c5add3dba)
+
+### 9. Tracks' Details Page
+![Screenshot 2025-06-29 223755](https://github.com/user-attachments/assets/cc75c071-57c9-4a4f-b1ab-3d9c039dcb09)
 
 ---
 
