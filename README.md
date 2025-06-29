@@ -16,11 +16,7 @@ A fully responsive Spotify web application clone built with **Vite**, **React**,
 - ⚛️ Global state management using **React Context API**
 - ⚡ Fast bundling and dev server with **Vite**
 
----
 
-## 📸 Screenshots
-
-> You can add UI screenshots here to showcase Home, Search, Playlist, Artist, Track pages, etc.
 
 ---
 
@@ -37,6 +33,7 @@ A fully responsive Spotify web application clone built with **Vite**, **React**,
 ## 📦 Getting Started
 
 git clone https://github.com/your-username/spotify-clone.git
+
 cd spotify-clone
 
 npm install
