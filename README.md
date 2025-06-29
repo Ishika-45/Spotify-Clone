@@ -1,12 +1,43 @@
-# React + Vite
+# 🎧 Spotify Clone (Vite + React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fully responsive Spotify web application clone built with **Vite**, **React**, and the **Spotify Web API**. It replicates key features of the original Spotify web player — including search, playlists, album views, and track previews — while maintaining a sleek UI using `styled-components`.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔐 **Spotify Login** using Authorization Code Flow with PKCE
+- 🎵 **User Playlists**: Browse your own playlists with images and metadata
+- 🔍 **Powerful Search**: Find tracks, artists, albums, and playlists
+- 📀 **Track Info Page**: See full details of any track including preview
+- 💿 **Album Page**: View album details and track list
+- 🎧 **Artist Info**: Genres, top tracks, and related metadata
+- 🎼 **Playlist Page**: Styled like real Spotify with a full track list
+- 🎨 Fully styled with **Styled Components**
+- 🧭 Routing with **React Router v6**
+- ⚛️ Global state management using **React Context API**
+- ⚡ Fast bundling and dev server with **Vite**
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📸 Screenshots
+
+> You can add UI screenshots here to showcase Home, Search, Playlist, Artist, Track pages, etc.
+
+---
+
+## 🛠 Tech Stack
+
+- **Framework:** React + Vite
+- **Styling:** styled-components
+- **Routing:** React Router DOM
+- **State Management:** Context API
+- **Auth/API:** Spotify Web API with PKCE OAuth Flow
+
+---
+
+## 📦 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/spotify-clone.git
+cd spotify-clone
